@@ -1,9 +1,3 @@
-# Real-Time-Clock-2
-
-Original author : Jarcikon
-
-His original read-me : 
-
 KSP Real-Time Clock
 Author: Jarcikon
 
