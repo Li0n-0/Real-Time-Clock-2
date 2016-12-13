@@ -14,6 +14,7 @@ namespace RealTimeClock2
 		private bool inSPH = false;
 		private RealTimeSettings settings;
 		private GUIStyle centeredStyle;
+		private bool hideGUI = false;
 
 //		public void Awake ()
 //		{
@@ -61,13 +62,26 @@ namespace RealTimeClock2
 				dateFormat = "t";
 			}
 
-
+			GameEvents.onHideUI.Add (HideUI);
+			GameEvents.onShowUI.Add (ShowUI);
 			GameEvents.onGameSceneSwitchRequested.Add (SceneSwitch);
 		}
 
 		public void OnDestroy ()
 		{
+			GameEvents.onHideUI.Remove (HideUI);
+			GameEvents.onShowUI.Remove (ShowUI);
 			GameEvents.onGameSceneSwitchRequested.Remove (SceneSwitch);
+		}
+
+		private void HideUI ()
+		{
+			hideGUI = true;
+		}
+
+		private void ShowUI ()
+		{
+			hideGUI = false;
 		}
 
 		private void SceneSwitch (GameEvents.FromToAction<GameScenes, GameScenes> eData)
@@ -95,7 +109,9 @@ namespace RealTimeClock2
 			if (windowPos.y > Screen.height - windowPos.height) {
 				windowPos.y = Screen.height - windowPos.height;
 			}
-			windowPos = GUI.Window (0, windowPos, DrawTime, "");
+			if (hideGUI == false) {
+				windowPos = GUI.Window (0, windowPos, DrawTime, "");
+			}
 		}
 
 		private void DrawTime (int windowID)
