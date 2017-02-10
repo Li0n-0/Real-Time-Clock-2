@@ -15,12 +15,7 @@ namespace RealTimeClock2
 		private RealTimeSettings settings;
 		private GUIStyle centeredStyle;
 		private bool hideGUI = false;
-
-//		public void Awake ()
-//		{
-//			Debug.Log ("[Real Time Clock 2] : In Awake");
-//			DontDestroyOnLoad (this);
-//		}
+		private bool draw = false;
 
 		public void Start ()
 		{
@@ -34,24 +29,29 @@ namespace RealTimeClock2
 			case GameScenes.SPACECENTER:
 				windowPos.x = settings.KSCPosX;
 				windowPos.y = settings.KSCPosY;
+				draw = settings.inKSC;
 				break;
 			case GameScenes.EDITOR:
 				if (EditorDriver.editorFacility == EditorFacility.SPH) {
 					inSPH = true;
 					windowPos.x = settings.SPHPosX;
 					windowPos.y = settings.SPHPosY;
+					draw = settings.inSPH;
 				} else {
 					windowPos.x = settings.VABPosX;
 					windowPos.y = settings.VABPosY;
+					draw = settings.inVAB;
 				}
 				break;
 			case GameScenes.TRACKSTATION:
 				windowPos.x = settings.trackStationPosX;
 				windowPos.y = settings.trackStationPosY;
+				draw = settings.inTrackStation;
 				break;
 			case GameScenes.FLIGHT:
 				windowPos.x = settings.flightPosX;
 				windowPos.y = settings.flightPosY;
+				draw = settings.inFlight;
 				break;
 			}
 
@@ -109,7 +109,7 @@ namespace RealTimeClock2
 			if (windowPos.y > Screen.height - windowPos.height) {
 				windowPos.y = Screen.height - windowPos.height;
 			}
-			if (hideGUI == false) {
+			if (! hideGUI && draw) {
 				windowPos = GUI.Window (0, windowPos, DrawTime, "");
 			}
 		}
@@ -138,16 +138,6 @@ namespace RealTimeClock2
 				dateFormat = "HH:mm";
 			}
 		}
-
-//		private void SaveSettings (GameScenes scene, Rect pos, bool is24)
-//		{
-//			
-//		}
-//
-//		private void LoadSettings (GameScenes scene)
-//		{
-//			
-//		}
 	}
 }
 
