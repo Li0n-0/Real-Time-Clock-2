@@ -35,3 +35,10 @@
 # Stuff
 *.pdb
 *.zip
+*.gif
+*.bat
+
+# KSP stuff
+*.log
+PartDatabase.cfg
+

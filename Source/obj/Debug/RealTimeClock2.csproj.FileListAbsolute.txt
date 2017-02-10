@@ -1,0 +1,17 @@
+D:\KSP_Projects\RealTimeClock2\bin\Debug\RealTimeClock2.dll
+D:\KSP_Projects\RealTimeClock2\bin\Debug\RealTimeClock2.pdb
+D:\KSP_Projects\RealTimeClock2\obj\Debug\RealTimeClock2.dll
+D:\KSP_Projects\RealTimeClock2\obj\Debug\RealTimeClock2.pdb
+D:\KSP_Projects\RealTimeClock2\bin\Debug\Assembly-CSharp.dll
+D:\KSP_Projects\RealTimeClock2\bin\Debug\UnityEngine.dll
+D:\KSP_Projects\RealTimeClock2\bin\Debug\Assembly-CSharp-firstpass.dll
+D:\KSP_Projects\RealTimeClock2\bin\Debug\TrackIRUnity.dll
+D:\KSP_Projects\RealTimeClock2\bin\Debug\UnityEngine.UI.dll
+D:\KSP_Projects\RealTimeClock2\bin\Debug\KSPAssets.dll
+D:\KSP_Projects\RealTimeClock2\bin\Debug\Mono.Cecil.dll
+D:\KSP_Projects\RealTimeClock2\bin\Debug\TDx.TDxInput.dll
+D:\KSP_Projects\RealTimeClock2\bin\Debug\Mono.Security.dll
+D:\KSP_Projects\RealTimeClock2\bin\Debug\UnityEngine.xml
+D:\KSP_Projects\RealTimeClock2\obj\Debug\RealTimeClock2.csprojResolveAssemblyReference.cache
+D:\GitHub\Real-Time-Clock-2\GameData\RealTimeClock2\RealTimeClock2.dll
+D:\GitHub\Real-Time-Clock-2\GameData\RealTimeClock2\RealTimeClock2.pdb
