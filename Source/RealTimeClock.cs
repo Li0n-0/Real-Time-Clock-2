@@ -109,8 +109,9 @@ namespace RealTimeClock2
 			if (windowPos.y > Screen.height - windowPos.height) {
 				windowPos.y = Screen.height - windowPos.height;
 			}
+
 			if (! hideGUI && draw) {
-				windowPos = GUI.Window (0, windowPos, DrawTime, "");
+				windowPos = GUI.Window (641286, windowPos, DrawTime, "");
 			}
 		}
 
