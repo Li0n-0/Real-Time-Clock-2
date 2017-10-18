@@ -15,7 +15,6 @@ Global
 		{C973DD6B-4E3D-42AC-952B-A51B4E5B78D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		BaseDirectory = ..\..\GitHub\Real-Time-Clock-2\Source
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = None
