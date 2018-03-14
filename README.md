@@ -1,6 +1,6 @@
 # Real-Time-Clock-2
 
-![RTC gif](https://github.com/Li0n-0/Real-Time-Clock-2/blob/master/pics/rtc.gif?raw=true)
+![RTC gif](https://github.com/Li0n-0/Real-Time-Clock-2/blob/master/Pics/rtc.gif?raw=true)
 
 Back in 0.21 days [Jarcikon](https://forum.kerbalspaceprogram.com/index.php?/profile/79734-jarcikon/) made a little plugin that display the (real) time in KSP, I asked and he let me take over his work, so here is the new version : **Real Time Clock 2**. 
 
@@ -11,7 +11,7 @@ You can drag wherever you want, its position is saved per scene.
 
 In the settings menu you can choose and which scene it should be active and if you want to use 24h format or am/pm.
 
-![RTC settings menu](https://github.com/Li0n-0/Real-Time-Clock-2/blob/master/pics/settings_menu.png?raw=true)
+![RTC settings menu](https://github.com/Li0n-0/Real-Time-Clock-2/blob/master/Pics/settings_menu.png?raw=true)
 
 
 **DOWNLOADS for KSP 1.4.1 :**
