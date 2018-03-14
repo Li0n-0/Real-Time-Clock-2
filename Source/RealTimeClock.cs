@@ -3,68 +3,71 @@ using UnityEngine;
 
 namespace RealTimeClock2
 {
-	[KSPAddon(KSPAddon.Startup.AllGameScenes, false)]
+	[KSPAddon(KSPAddon.Startup.EveryScene, false)]
 	public class RealTimeClock : MonoBehaviour
 	{
 
 		private Rect windowPos = new Rect(0, 0, 75f, 20f);
-		private bool show24 = true;
 		private string dateFormat;
 		private GameScenes currentScene;
-		private bool inSPH = false;
-		private RealTimeSettings settings;
+		private RTCGameSettings gameSettings;
+
 		private GUIStyle centeredStyle;
 		private bool hideGUI = false;
 		private bool draw = false;
 
 		public void Start ()
 		{
-			settings = new RealTimeSettings ();
-			show24 = settings.is24;
 			currentScene = HighLogic.LoadedScene;
-
-			// Fetch position
-			switch (currentScene)
+			if (currentScene == GameScenes.CREDITS || currentScene == GameScenes.LOADING 
+				|| currentScene == GameScenes.LOADINGBUFFER || currentScene == GameScenes.MAINMENU 
+				|| currentScene == GameScenes.PSYSTEM || currentScene == GameScenes.SETTINGS)
 			{
-			case GameScenes.SPACECENTER:
-				windowPos.x = settings.KSCPosX;
-				windowPos.y = settings.KSCPosY;
-				draw = settings.inKSC;
-				break;
-			case GameScenes.EDITOR:
-				if (EditorDriver.editorFacility == EditorFacility.SPH) {
-					inSPH = true;
-					windowPos.x = settings.SPHPosX;
-					windowPos.y = settings.SPHPosY;
-					draw = settings.inSPH;
-				} else {
-					windowPos.x = settings.VABPosX;
-					windowPos.y = settings.VABPosY;
-					draw = settings.inVAB;
-				}
-				break;
-			case GameScenes.TRACKSTATION:
-				windowPos.x = settings.trackStationPosX;
-				windowPos.y = settings.trackStationPosY;
-				draw = settings.inTrackStation;
-				break;
-			case GameScenes.FLIGHT:
-				windowPos.x = settings.flightPosX;
-				windowPos.y = settings.flightPosY;
-				draw = settings.inFlight;
-				break;
+				Destroy (this);
+				return;
 			}
 
-			// Fetch 24h display
-			if (show24) {
-				dateFormat = "HH:mm";
+			if (currentScene == GameScenes.MISSIONBUILDER) {
+				windowPos.position = RTCSettings.posMB;
+				draw = RTCSettings.enableInMB;
+				if (RTCSettings.use24InMB) {
+					dateFormat = "HH:mm";
+				} else {
+					dateFormat = "t";
+				}
 			} else {
-				dateFormat = "t";
+				gameSettings = HighLogic.CurrentGame.Parameters.CustomParams<RTCGameSettings> ();
+				// Fetch 24h display
+				SetFormat ();
+
+				switch (currentScene)
+				{
+				case GameScenes.SPACECENTER:
+					windowPos.position = RTCSettings.posKSC;
+					draw = gameSettings.enableKSC;
+					break;
+				case GameScenes.EDITOR:
+					windowPos.position = RTCSettings.posEditor;
+					draw = gameSettings.enableEditor;
+					break;
+				case GameScenes.TRACKSTATION:
+					windowPos.position = RTCSettings.posTS;
+					draw = gameSettings.enableTS;
+					break;
+				case GameScenes.FLIGHT:
+					windowPos.position = RTCSettings.posFlight;
+					draw = gameSettings.enableFlight;
+					break;
+				default:
+					Destroy (this);
+					return;
+				}
 			}
 
 			GameEvents.onHideUI.Add (HideUI);
 			GameEvents.onShowUI.Add (ShowUI);
 			GameEvents.onGameSceneSwitchRequested.Add (SceneSwitch);
+			GameEvents.OnGameSettingsApplied.Add (SetFormat);
 		}
 
 		public void OnDestroy ()
@@ -72,6 +75,16 @@ namespace RealTimeClock2
 			GameEvents.onHideUI.Remove (HideUI);
 			GameEvents.onShowUI.Remove (ShowUI);
 			GameEvents.onGameSceneSwitchRequested.Remove (SceneSwitch);
+			GameEvents.OnGameSettingsApplied.Remove (SetFormat);
+		}
+
+		private void SetFormat ()
+		{
+			if (gameSettings.use24) {
+				dateFormat = "HH:mm";
+			} else {
+				dateFormat = "t";
+			}
 		}
 
 		private void HideUI ()
@@ -86,7 +99,28 @@ namespace RealTimeClock2
 
 		private void SceneSwitch (GameEvents.FromToAction<GameScenes, GameScenes> eData)
 		{
-			settings.Save (eData.from, windowPos, show24, inSPH);
+			string sceneName = "";
+
+			switch (eData.from) {
+			case GameScenes.SPACECENTER:
+				sceneName = "KSC_pos";
+				break;
+			case GameScenes.EDITOR:
+				sceneName = "Editor_pos";
+				break;
+			case GameScenes.TRACKSTATION:
+				sceneName = "TS_pos";
+				break;
+			case GameScenes.FLIGHT:
+				sceneName = "Flight_pos";
+				break;
+			case GameScenes.MISSIONBUILDER:
+				sceneName = "MB_pos";
+				break;
+			}
+
+			RTCSettings.SavePos (sceneName, windowPos.position);
+			RTCSettings.WriteSave ();
 		}
 
 		private void OnGUI ()
@@ -96,9 +130,7 @@ namespace RealTimeClock2
 
 			centeredStyle = GUI.skin.GetStyle("Label");
 			centeredStyle.alignment = TextAnchor.UpperCenter;
-			if (settings.fontBold) {
-				centeredStyle.fontStyle = FontStyle.Bold;
-			}
+			centeredStyle.fontStyle = FontStyle.Bold;
 
 			// Make sure the window isn't dragged off screen
 			if (windowPos.x < 0) { windowPos.x = 0; }
@@ -119,25 +151,9 @@ namespace RealTimeClock2
 		{
 			string curTime = DateTime.Now.ToString (dateFormat);
 
-			if (Event.current.type == EventType.mouseUp && Event.current.button == 1)
-			{
-				Toggle24 ();
-			}
-
 			GUI.Label (new Rect (5, 1, windowPos.width - 10, windowPos.height), curTime);
 
 			GUI.DragWindow ();
-		}
-
-		private void Toggle24 ()
-		{
-			if (show24) {
-				show24 = false;
-				dateFormat = "t";
-			} else {
-				show24 = true;
-				dateFormat = "HH:mm";
-			}
 		}
 	}
 }
