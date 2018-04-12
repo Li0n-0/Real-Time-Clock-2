@@ -40,28 +40,7 @@ namespace RealTimeClock2
 				// Fetch 24h display
 				SetFormat ();
 
-				switch (currentScene)
-				{
-				case GameScenes.SPACECENTER:
-					windowPos.position = RTCSettings.posKSC;
-					draw = gameSettings.enableKSC;
-					break;
-				case GameScenes.EDITOR:
-					windowPos.position = RTCSettings.posEditor;
-					draw = gameSettings.enableEditor;
-					break;
-				case GameScenes.TRACKSTATION:
-					windowPos.position = RTCSettings.posTS;
-					draw = gameSettings.enableTS;
-					break;
-				case GameScenes.FLIGHT:
-					windowPos.position = RTCSettings.posFlight;
-					draw = gameSettings.enableFlight;
-					break;
-				default:
-					Destroy (this);
-					return;
-				}
+				SetPosPerScene ();
 			}
 
 			GameEvents.onHideUI.Add (HideUI);
@@ -84,6 +63,35 @@ namespace RealTimeClock2
 				dateFormat = "HH:mm";
 			} else {
 				dateFormat = "t";
+			}
+
+			// check the enable/disable per scene now
+			SetPosPerScene ();
+		}
+
+		private void SetPosPerScene ()
+		{
+			switch (currentScene)
+			{
+			case GameScenes.SPACECENTER:
+				windowPos.position = RTCSettings.posKSC;
+				draw = gameSettings.enableKSC;
+				break;
+			case GameScenes.EDITOR:
+				windowPos.position = RTCSettings.posEditor;
+				draw = gameSettings.enableEditor;
+				break;
+			case GameScenes.TRACKSTATION:
+				windowPos.position = RTCSettings.posTS;
+				draw = gameSettings.enableTS;
+				break;
+			case GameScenes.FLIGHT:
+				windowPos.position = RTCSettings.posFlight;
+				draw = gameSettings.enableFlight;
+				break;
+			default:
+				Destroy (this);
+				return;
 			}
 		}
 
