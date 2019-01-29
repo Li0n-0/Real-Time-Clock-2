@@ -17,6 +17,7 @@ D:\GitHub\GitHub\Real-Time-Clock-2\GameData\RealTimeClock2\RealTimeClock2.dll
 D:\GitHub\GitHub\Real-Time-Clock-2\GameData\RealTimeClock2\RealTimeClock2.pdb
 D:\GitHub\Real-Time-Clock-2\GameData\RealTimeClock2\RealTimeClock2.dll
 D:\GitHub\Real-Time-Clock-2\GameData\RealTimeClock2\RealTimeClock2.pdb
-D:\GitHub\Real-Time-Clock-2\Source\obj\Debug\RealTimeClock2.csprojResolveAssemblyReference.cache
 D:\GitHub\Real-Time-Clock-2\Source\obj\Debug\RealTimeClock2.dll
 D:\GitHub\Real-Time-Clock-2\Source\obj\Debug\RealTimeClock2.pdb
+D:\GitHub\Real-Time-Clock-2\Source\obj\Debug\RealTimeClock2.csprojAssemblyReference.cache
+D:\GitHub\Real-Time-Clock-2\Source\obj\Debug\RealTimeClock2.csproj.CoreCompileInputs.cache
